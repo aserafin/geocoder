@@ -2,4 +2,6 @@ pkg/*
 rdoc/*
 *.gem
 .bundle
+.idea
+.rvmrc
 Gemfile.lock

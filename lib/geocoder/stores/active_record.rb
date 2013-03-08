@@ -41,7 +41,9 @@ module Geocoder::Store
             # If no lat/lon given we don't want any results, but we still
             # need distance and bearing columns so you can add, for example:
             # .order("distance")
-            select(select_clause(nil, "NULL", "NULL")).where(false_condition)
+            #we still want to use select options if this is in subquery for example
+            select_options = args[1].try(:[], :select)
+            select(select_clause(select_options, "NULL", "NULL")).where(false_condition)
           end
         }
 
