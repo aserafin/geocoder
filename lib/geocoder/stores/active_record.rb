@@ -43,7 +43,7 @@ module Geocoder::Store
             # .order("distance")
             #we still want to use select options if this is in subquery for example
             select_options = args[1].try(:[], :select)
-            select(select_clause(select_options, "NULL", "NULL")).where(false_condition)
+            select(select_clause(select_options, "NULL", "NULL"))
           end
         }
 
