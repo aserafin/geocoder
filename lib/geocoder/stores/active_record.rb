@@ -126,8 +126,7 @@ module Geocoder::Store
           conditions = bounding_box_conditions
         else
           unless radius.nil?
-            conditions[0] += " AND #{distance} <= ?"
-            conditions << radius
+            conditions = [bounding_box_conditions + " AND #{distance} <= ?", radius]
           end
         end
         {
