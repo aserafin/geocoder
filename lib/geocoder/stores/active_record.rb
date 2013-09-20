@@ -104,7 +104,7 @@ module Geocoder::Store
       #                        set to false or nil to omit the ORDER BY clause
       # * +:exclude+         - an object to exclude (used by the +nearbys+ method)
       #
-      def near_scope_options(latitude, longitude, radius = 20, options = {})
+      def near_scope_options(latitude, longitude, radius, options = {})
         if options[:units]
           options[:units] = options[:units].to_sym
         end
@@ -125,7 +125,11 @@ module Geocoder::Store
         if using_sqlite?
           conditions = bounding_box_conditions
         else
-          conditions = [bounding_box_conditions + " AND #{distance} <= ?", radius]
+          conditions = [bounding_box_conditions] + " AND #{distance} <= ?", radius]
+          unless radius.nil?
+            conditions[0] += " AND #{distance} <= ?"
+            conditions << radius
+          end
         end
         {
           :select => select_clause(options[:select],
